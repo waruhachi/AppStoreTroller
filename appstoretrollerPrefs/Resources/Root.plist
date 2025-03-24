@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enable the tweak, purchase an app, disable the tweak and then you can download the app.</string>
+			<string>Enable the tweak, spoof your version to a REASONABLE version (or the app will likely crash after download), apply, and profit.</string>
 			<key>headerText</key>
 			<string>AppStore Troller</string>
 		</dict>
@@ -21,6 +21,16 @@
 			<string>enabled</string>
 			<key>label</key>
 			<string>Enabled</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>key</key>
+			<string>iOSVersion</string>
+			<key>label</key>
+			<string>iOS Version to Spoof</string>
+			<key>defaults</key>
+			<string>dev.mineek.appstoretroller</string>
 		</dict>
 	</array>
 	<key>title</key>

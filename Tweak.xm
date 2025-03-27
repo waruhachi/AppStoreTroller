@@ -3,6 +3,7 @@
 #import <rootless.h>
 
 static NSString *iosVersion = nil;
+static BOOL updatesEnabled = NO;
 
 %group appstoredHooks
 
@@ -11,9 +12,18 @@ static NSString *iosVersion = nil;
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field
 {
     if (iosVersion != nil) {
-        if ([field isEqualToString:@"User-Agent"]) {
-            // NSLog(@"the spoofed ios is: iOS/%@ ", iosVersion);
-            value = [value stringByReplacingOccurrencesOfString:@"iOS/.*? " withString:[NSString stringWithFormat:@"iOS/%@ ", iosVersion] options:NSRegularExpressionSearch range:NSMakeRange(0, [value length])];
+        if (updatesEnabled == YES) {
+            if ([field isEqualToString:@"User-Agent"]) {
+                // NSLog(@"the spoofed ios is: iOS/%@ ", iosVersion);
+                value = [value stringByReplacingOccurrencesOfString:@"iOS/.*? " withString:[NSString stringWithFormat:@"iOS/%@ ", iosVersion] options:NSRegularExpressionSearch range:NSMakeRange(0, [value length])];
+            }
+        } else {
+            if ([[self.URL absoluteString] containsString:@"WebObjects/MZBuy.woa/wa/buyProduct"]) {
+                if ([field isEqualToString:@"User-Agent"]) {
+                    // NSLog(@"the spoofed ios is: iOS/%@ ", iosVersion);
+                    value = [value stringByReplacingOccurrencesOfString:@"iOS/.*? " withString:[NSString stringWithFormat:@"iOS/%@ ", iosVersion] options:NSRegularExpressionSearch range:NSMakeRange(0, [value length])];
+                }
+            }
         }
     }
     %orig(value, field);
@@ -48,6 +58,7 @@ static NSString *iosVersion = nil;
 
     [[NSFileManager defaultManager] setAttributes:@{NSFilePosixPermissions: @(0644)} ofItemAtPath:ROOT_PATH_NS(@"/var/mobile/Library/Preferences/dev.mineek.appstoretroller.plist") error:nil];
     NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:ROOT_PATH_NS(@"/var/mobile/Library/Preferences/dev.mineek.appstoretroller.plist")];
+    updatesEnabled = [[prefs objectForKey:@"updatesEnabled"] boolValue];
     if (![[prefs objectForKey:@"enabled"] boolValue]) {
         // NSLog(@"[appstoretroller] Not enabled.");
         return;

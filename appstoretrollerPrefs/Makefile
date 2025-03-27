@@ -10,6 +10,6 @@ appstoretrollerPrefs_FILES = ATPRootListController.m
 appstoretrollerPrefs_FRAMEWORKS = UIKit
 appstoretrollerPrefs_PRIVATE_FRAMEWORKS = Preferences
 appstoretrollerPrefs_INSTALL_PATH = /Library/PreferenceBundles
-appstoretrollerPrefs_CFLAGS = -fobjc-arc
+appstoretrollerPrefs_CFLAGS = -fobjc-arc -w
 
 include $(THEOS_MAKE_PATH)/bundle.mk

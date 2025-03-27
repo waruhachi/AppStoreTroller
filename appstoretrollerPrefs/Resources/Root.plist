@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enable the tweak, spoof your version to a REASONABLE version (or the app will likely crash after download), apply, and profit.</string>
+			<string>Enable the tweak, spoof your version to a REASONABLE version (or the app will likely crash after download), apply, and profit. DISCLAIMER: ENABLING THE UPDATE OPTION MIGHT MAKE YOUR DEVICE SHOW AN OBSURD AMOUNT OF UPDATES DEPENDING ON THE VERSION YOU SPOOFED TO.</string>
 			<key>headerText</key>
 			<string>AppStore Troller</string>
 		</dict>
@@ -21,6 +21,20 @@
 			<string>enabled</string>
 			<key>label</key>
 			<string>Enabled</string>
+			<key>default</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>defaults</key>
+			<string>dev.mineek.appstoretroller</string>
+			<key>key</key>
+			<string>updatesEnabled</string>
+			<key>label</key>
+			<string>Enabled for Updates (DISCLAIMER)</string>
+			<key>default</key>
+			<false/>
 		</dict>
 		<dict>
 			<key>cell</key>

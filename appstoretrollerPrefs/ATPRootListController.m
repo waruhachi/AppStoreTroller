@@ -19,9 +19,24 @@
 }
 
 - (void)respring {
-	NSTask *t = [[NSTask alloc] init];
-	[t setLaunchPath:@THEOS_PACKAGE_INSTALL_PREFIX "/usr/local/bin/appstoretrollerKiller"];
-	[t launch];
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"dev.mineek.appstoretroller"];
+    
+    NSString *prefsPath = @THEOS_PACKAGE_INSTALL_PREFIX "/var/mobile/Library/Preferences/dev.mineek.appstoretroller.plist";
+    BOOL enabled = [defaults boolForKey:@"enabled"];
+    BOOL updatesEnabled = [defaults boolForKey:@"updatesEnabled"];
+    NSString *iOSVersion = [defaults stringForKey:@"iOSVersion"];
+    
+    NSDictionary *prefs = @{
+        @"enabled": @(enabled),
+        @"updatesEnabled": @(updatesEnabled),
+        @"iOSVersion": iOSVersion
+    };
+
+    [prefs writeToFile:prefsPath atomically:YES];
+    
+    NSTask *t = [[NSTask alloc] init];
+    [t setLaunchPath:@THEOS_PACKAGE_INSTALL_PREFIX "/usr/local/bin/appstoretrollerKiller"];
+    [t launch];
 }
 
 @end

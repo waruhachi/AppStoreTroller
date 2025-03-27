@@ -1,9 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <rootless.h>
 
-NSUserDefaults *prefs;
-
-static NSString *iosVersion;
+static NSString *iosVersion = nil;
 
 %group appstoredHooks
 
@@ -30,7 +29,12 @@ static NSString *iosVersion;
 
 -(BOOL)_isMinimumOSVersion:(id)arg1 applicableToOSVersion:(id)arg2 requiredOS:(unsigned long long)arg3 error:(id*)arg4
 {
-	return true;
+    // NSLog(@"arg1: %@ arg2: %@ arg3: %llu", arg1, arg2, arg3);
+    if (iosVersion != nil) {
+	    return %orig(arg1, iosVersion, arg3, arg4);
+    } else {
+        return %orig(arg1, arg2, arg3, arg4);
+    }
 }
 
 %end
@@ -41,12 +45,16 @@ static NSString *iosVersion;
     NSProcessInfo *processInfo = [NSProcessInfo processInfo];
     
     NSString *currentProcessName = [processInfo processName];
+
+    [[NSFileManager defaultManager] setAttributes:@{NSFilePosixPermissions: @(0644)} ofItemAtPath:ROOT_PATH_NS(@"/var/mobile/Library/Preferences/dev.mineek.appstoretroller.plist") error:nil];
+    NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:ROOT_PATH_NS(@"/var/mobile/Library/Preferences/dev.mineek.appstoretroller.plist")];
+    if (![[prefs objectForKey:@"enabled"] boolValue]) {
+        // NSLog(@"[appstoretroller] Not enabled.");
+        return;
+    }
+    iosVersion = [prefs objectForKey:@"iOSVersion"];
+
     if ([currentProcessName isEqualToString:@"appstored"]) {
-        prefs = [[NSUserDefaults alloc] initWithSuiteName:@"dev.mineek.appstoretroller"];
-        if (![prefs boolForKey:@"enabled"]) {
-            return;
-        }
-        iosVersion = [prefs stringForKey:@"iOSVersion"];
         %init(appstoredHooks);
     } else if ([currentProcessName isEqualToString:@"installd"]) {
         %init(installdHooks);

@@ -15,4 +15,5 @@ appstoretroller_CFLAGS = -fobjc-arc -Wno-deprecated-declarations
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 SUBPROJECTS += appstoretrollerPrefs
+SUBPROJECTS += appstoretrollerKiller
 include $(THEOS_MAKE_PATH)/aggregate.mk

@@ -20,13 +20,7 @@
 
 - (void)respring {
 	NSTask *t = [[NSTask alloc] init];
-	[t setLaunchPath:@THEOS_PACKAGE_INSTALL_PREFIX "/usr/bin/killall"];
-	[t setArguments:[NSArray arrayWithObjects:@"-9", @"appstored", nil]];
-	[t launch];
-
-	t = [[NSTask alloc] init];
-	[t setLaunchPath:@THEOS_PACKAGE_INSTALL_PREFIX "/usr/bin/killall"];
-	[t setArguments:[NSArray arrayWithObjects:@"AppStore", nil]];
+	[t setLaunchPath:@THEOS_PACKAGE_INSTALL_PREFIX "/usr/local/bin/appstoretrollerKiller"];
 	[t launch];
 }
 

@@ -4,7 +4,7 @@
 <dict>
 	<key>items</key>
 	<array>
-		<dict>
+        <dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
@@ -16,7 +16,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>defaults</key>
-			<string>dev.mineek.appstoretroller</string>
+			<string>dev.mineek.appstoretroller.preferences</string>
 			<key>key</key>
 			<string>enabled</string>
 			<key>label</key>
@@ -28,7 +28,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>defaults</key>
-			<string>dev.mineek.appstoretroller</string>
+			<string>dev.mineek.appstoretroller.preferences</string>
 			<key>key</key>
 			<string>updatesEnabled</string>
 			<key>label</key>
@@ -44,7 +44,7 @@
 			<key>label</key>
 			<string>iOS Version to Spoof</string>
 			<key>defaults</key>
-			<string>dev.mineek.appstoretroller</string>
+			<string>dev.mineek.appstoretroller.preferences</string>
 		</dict>
 	</array>
 	<key>title</key>

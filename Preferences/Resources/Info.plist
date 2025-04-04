@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>appstoretrollerPrefs</string>
+	<string>AppStoreTrollerPreferences</string>
 	<key>CFBundleIdentifier</key>
-	<string>dev.mineek.appstoretrollerprefs</string>
+	<string>dev.mineek.appstoretroller.preferences</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -19,6 +19,6 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSPrincipalClass</key>
-	<string>ATPRootListController</string>
+	<string>AppStoreTrollerRootListController</string>
 </dict>
 </plist>

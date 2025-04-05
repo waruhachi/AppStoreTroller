@@ -8,7 +8,14 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enable the tweak, spoof your version to a REASONABLE version (or the app will likely crash after download), apply, and profit. DISCLAIMER: ENABLING THE UPDATE OPTION MIGHT MAKE YOUR DEVICE SHOW AN OBSURD AMOUNT OF UPDATES DEPENDING ON THE VERSION YOU SPOOFED TO.</string>
+			<string>1. Enable the Tweak: Activate the tweak in your settings.
+2. Enter a Reasonable iOS Version: Input a plausible iOS version. (Note: Entering an unrealistic version may cause the app to crash after download.)
+3. Tap Apply: Confirm your changes by tapping the "Apply" button.
+4. Purchase the App: Proceed to purchase the app. (It will successfully purchase, but the installation may fail.)
+5. Disable the Tweak: After the purchase, turn off the tweak.
+6. Install the Last Compatible Version: If available, download and install the last compatible version of the app.
+
+Disclaimer: Enabling the update option may result in your device displaying an excessive number of updates, depending on the version you spoofed.</string>
 			<key>headerText</key>
 			<string>AppStore Troller</string>
 		</dict>

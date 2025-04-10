@@ -4,26 +4,11 @@ permissions:
     contents: write
 
 on:
-    workflow_dispatch:
-    push:
-        branches:
-            - main
+    release:
+        types: [published]
 
 jobs:
-    cleanup:
-        runs-on: macos-latest
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Cleaning up existing releases and tags
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                gh release delete release --yes || true
-                git push origin :refs/tags/release || true
-
     build:
-        needs: cleanup
         runs-on: macos-latest
         strategy:
             matrix:
@@ -49,7 +34,7 @@ jobs:
             - name: Build Package
               shell: bash
               run: |
-                make clean package FINALPACKAGE=1 ${{ matrix.scheme_arg }}
+                make clean package FINALPACKAGE=1 STRIP=0 ${{ matrix.scheme_arg }}
 
             - name: Upload DEB
               uses: actions/upload-artifact@v4
@@ -66,12 +51,8 @@ jobs:
             - name: Download all DEBs
               uses: actions/download-artifact@v4
               with:
-                path: all-packages
-
-            - name: Prepare DEBs
-              run: |
-                mkdir -p packages
-                cp all-packages/*-package/*.deb packages/
+                path: packages
+                merge-multiple: true
 
             - name: Generate Checksums
               id: metadata
@@ -84,6 +65,7 @@ jobs:
                     echo "* SHA1: $(shasum -a 1 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "* SHA256: $(shasum -a 256 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "" >> release_body.md
+                    break
                   fi
                 done
 
@@ -94,6 +76,7 @@ jobs:
                     echo "* SHA1: $(shasum -a 1 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "* SHA256: $(shasum -a 256 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "" >> release_body.md
+                    break
                   fi
                 done
 
@@ -103,6 +86,8 @@ jobs:
                     echo "* MD5: $(md5 -q $pkg)" >> release_body.md
                     echo "* SHA1: $(shasum -a 1 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "* SHA256: $(shasum -a 256 $pkg | awk '{ print $1 }')" >> release_body.md
+                    echo "" >> release_body.md
+                    break
                   fi
                 done
 
@@ -111,10 +96,19 @@ jobs:
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                tag_name: release
+                tag_name: ${{ github.event.release.tag_name }}
                 name: ${{ github.event.repository.name }}
                 body_path: release_body.md
                 files: packages/*.deb
                 draft: false
                 prerelease: false
                 make_latest: true
+
+            - name: Delete build artifacts
+              uses: geekyeggo/delete-artifact@v5
+              with:
+                name: |
+                  rootful-package
+                  rootless-package
+                  roothide-package
+                failOnError: false

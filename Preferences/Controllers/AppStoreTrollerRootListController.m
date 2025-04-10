@@ -17,9 +17,6 @@
 }
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
-    NSUserDefaults *preferences = [[NSUserDefaults alloc] initWithSuiteName:@"dev.mineek.appstoretroller.preferences"];
-    [preferences setObject:value forKey:specifier.properties[@"key"]];
-
     [super setPreferenceValue:value specifier:specifier];
 }
 

@@ -50,7 +50,7 @@ jobs:
               run: |
                 make clean package FINALPACKAGE=1 ${{ matrix.scheme_arg }}
 
-            - name: Upload package artifact
+            - name: Upload DEB
               uses: actions/upload-artifact@v4
               with:
                 name: ${{ matrix.scheme }}-package
@@ -62,27 +62,23 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Download all artifacts
+            - name: Download all DEBs
               uses: actions/download-artifact@v4
               with:
                 path: all-packages
 
-            - name: Prepare packages
+            - name: Prepare DEBs
               run: |
                 mkdir -p packages
                 cp all-packages/*-package/*.deb packages/
-                ls -la packages/
 
-            - name: Generate checksums
+            - name: Generate Checksums
               id: metadata
               shell: bash
               run: |
-                # Find each package and generate checksums by architecture
-                echo "### ${{ github.event.repository.name }} Release" > release_body.md
-
                 for pkg in packages/*_iphoneos-arm.deb; do
                   if [ -f "$pkg" ]; then
-                    echo "## Regular (iphoneos-arm)" >> release_body.md
+                    echo "### Rootful (iphoneos-arm)" >> release_body.md
                     echo "* MD5: $(md5 -q $pkg)" >> release_body.md
                     echo "* SHA1: $(shasum -a 1 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "* SHA256: $(shasum -a 256 $pkg | awk '{ print $1 }')" >> release_body.md
@@ -92,7 +88,7 @@ jobs:
 
                 for pkg in packages/*_iphoneos-arm64.deb; do
                   if [ -f "$pkg" ]; then
-                    echo "## Rootless (iphoneos-arm64)" >> release_body.md
+                    echo "### Rootless (iphoneos-arm64)" >> release_body.md
                     echo "* MD5: $(md5 -q $pkg)" >> release_body.md
                     echo "* SHA1: $(shasum -a 1 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "* SHA256: $(shasum -a 256 $pkg | awk '{ print $1 }')" >> release_body.md
@@ -102,7 +98,7 @@ jobs:
 
                 for pkg in packages/*_iphoneos-arm64e.deb; do
                   if [ -f "$pkg" ]; then
-                    echo "## RootHide (iphoneos-arm64e)" >> release_body.md
+                    echo "### RootHide (iphoneos-arm64e)" >> release_body.md
                     echo "* MD5: $(md5 -q $pkg)" >> release_body.md
                     echo "* SHA1: $(shasum -a 1 $pkg | awk '{ print $1 }')" >> release_body.md
                     echo "* SHA256: $(shasum -a 256 $pkg | awk '{ print $1 }')" >> release_body.md

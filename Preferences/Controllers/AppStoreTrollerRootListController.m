@@ -21,6 +21,14 @@
 }
 
 - (void)respring {
+	NSUserDefaults *preferences = [[NSUserDefaults alloc] initWithSuiteName:@"dev.mineek.appstoretroller.preferences"];
+
+    NSString *iOSVersion = [preferences stringForKey:@"iOSVersion"];
+    if (!iOSVersion) {
+        [preferences setBool:NO forKey:@"enabled"];
+        [preferences synchronize];
+    }
+
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:jbroot(@"/usr/local/bin/AppStoreTrollerKiller")];
     [task launch];

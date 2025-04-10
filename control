@@ -6,4 +6,4 @@ Description: Bypass iOS version check for apps in the AppStore
 Maintainer: waruhachi
 Author: Mineek
 Section: Tweaks
-Depends: mobilesubstrate (>= 0.9.5000)
+Depends: mobilesubstrate, preferenceloader

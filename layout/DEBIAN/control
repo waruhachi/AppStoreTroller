@@ -1,6 +1,6 @@
 Package: dev.mineek.appstoretroller
 Name: AppStoreTroller
-Version: 0.1.1
+Version: 0.1.2
 Architecture: iphoneos-arm
 Description: Bypass iOS version check for apps in the AppStore
 Maintainer: waruhachi

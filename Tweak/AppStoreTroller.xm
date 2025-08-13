@@ -31,6 +31,10 @@
 %hook MIBundle
 
 - (BOOL)_isMinimumOSVersion:(id)arg1 applicableToOSVersion:(id)arg2 requiredOS:(unsigned long long)arg3 error:(id*)arg4 {
+    if ([self isWatchApp]) {
+        return %orig(arg1, arg2, arg3, arg4);
+    }
+    
     if (iosVersion != nil) {
 	    return %orig(arg1, iosVersion, arg3, arg4);
     } else {

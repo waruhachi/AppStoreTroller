@@ -2,6 +2,10 @@
 #import <UIKit/UIKit.h>
 #import <rootless.h>
 
+@interface MIBundle : NSObject
+- (BOOL)isWatchApp;
+@end
+
 static NSString *iosVersion = nil;
 static BOOL updatesEnabled = NO;
 
@@ -39,6 +43,9 @@ static BOOL updatesEnabled = NO;
 
 -(BOOL)_isMinimumOSVersion:(id)arg1 applicableToOSVersion:(id)arg2 requiredOS:(unsigned long long)arg3 error:(id*)arg4
 {
+    if ([self isWatchApp]) {
+        return %orig(arg1, arg2, arg3, arg4);
+    }
     // NSLog(@"arg1: %@ arg2: %@ arg3: %llu", arg1, arg2, arg3);
     if (iosVersion != nil) {
 	    return %orig(arg1, iosVersion, arg3, arg4);

@@ -1,6 +1,6 @@
 Package: dev.mineek.appstoretroller
 Name: appstoretroller
-Version: 0.1.1
+Version: 0.1.2
 Architecture: iphoneos-arm
 Description: Modified version of mineeks tweak that lets you specify the minimum version and bypass installd version check
 Maintainer: Mineek

@@ -6,4 +6,4 @@ Description: Modified version of mineeks tweak that lets you specify the minimum
 Maintainer: Mineek
 Author: Mineek
 Section: Tweaks
-Depends: mobilesubstrate (>= 0.9.5000)
+Depends: mobilesubstrate, preferenceloader

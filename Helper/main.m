@@ -1,8 +1,4 @@
-#include "TSUtil.h"
-
-#include <stdio.h>
-#include <roothide.h>
-#include <Foundation/Foundation.h>
+#include "main.h"
 
 int main(int argc, char *argv[], char *envp[]) {
 	@autoreleasepool {
